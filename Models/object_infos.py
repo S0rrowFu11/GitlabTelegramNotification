@@ -1,0 +1,3 @@
+
+class ObjectInfos():
+        NOTE = "note"

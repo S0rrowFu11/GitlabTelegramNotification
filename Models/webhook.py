@@ -6,6 +6,7 @@ from Models.repository import Repository
 from Models.issue import Issue
 from Models.assignee import Assignee
 from Models.merge_request import MergeRequest
+from typing import List
 from pydantic import BaseModel
 
 
@@ -16,6 +17,6 @@ class WebHook(BaseModel):
     object_attributes: ObjectAttributes
     repository: Repository
     issue: Issue | None = None
-    builds: list[Build] = []
-    assignees: list[Assignee] = []
+    builds: List[Build] = []
+    assignees: List[Assignee] = []
     merge_request: MergeRequest | None = None
