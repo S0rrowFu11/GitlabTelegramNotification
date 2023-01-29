@@ -141,7 +141,7 @@
       "human_total_time_spent": null,
       "human_time_change": null,
       "human_time_estimate": null,
-      "assignee_ids": [],
+      "assignee_ids": [3],
       "reviewer_ids": [],
       "labels": [],
       "state": "opened",

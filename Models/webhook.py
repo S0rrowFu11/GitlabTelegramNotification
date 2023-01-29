@@ -18,5 +18,4 @@ class WebHook(BaseModel):
     repository: Repository | None = None
     issue: Issue | None = None
     builds: List[Build] = []
-    assignees: List[Assignee] = []
     merge_request: MergeRequest | None = None
