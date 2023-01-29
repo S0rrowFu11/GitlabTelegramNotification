@@ -7,3 +7,6 @@
 #### 3. Create a database (example in \postgresql\schema)
 #### 4. Upload to the server
 #### 5. Add a webhook to GitLab: {your server URL}/WebHook/
+
+
+##### Temporarily in Russian langiage
