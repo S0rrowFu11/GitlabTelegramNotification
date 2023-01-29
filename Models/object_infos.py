@@ -8,3 +8,4 @@ class ObjectInfos(Enum):
     ISSUE = "issue"
     MERGE_REQUEST = "merge_request"
     PIPELINE = "pipeline"
+    FAILED_STATUS = "failed"

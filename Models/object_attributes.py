@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class ObjectAttributes(BaseModel):
-    author_id: int
+    author_id: int | None
     id: int | None
     title: str | None = None
     description: str | None = None

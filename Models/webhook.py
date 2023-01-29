@@ -15,7 +15,7 @@ class WebHook(BaseModel):
     user: User
     project: Project
     object_attributes: ObjectAttributes
-    repository: Repository
+    repository: Repository | None = None
     issue: Issue | None = None
     builds: List[Build] = []
     assignees: List[Assignee] = []
