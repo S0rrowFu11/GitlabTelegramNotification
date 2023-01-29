@@ -9,4 +9,4 @@
 #### 5. Add a webhook to GitLab: {your server URL}/WebHook/
 
 
-##### Temporarily in Russian langiage
+##### Temporarily in Russian language only
