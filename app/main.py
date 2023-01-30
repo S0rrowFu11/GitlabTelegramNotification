@@ -9,6 +9,7 @@ from app.service.generate_new_merge_request_message import generate_new_merge_re
 from app.models.webhook import Webhook
 from app.models.object_infos import ObjectType
 from app.service.get_telegram_ids import get_telegram_ids
+from fastapi import Request
 
 
 app = FastAPI()
@@ -47,3 +48,7 @@ async def new_comment_webhook(webhook: Webhook) -> Webhook:
         return webhook
 
     return webhook
+
+@app.post("/echo")
+async def echo_request(request: Request):
+    return await request.body()
