@@ -15,12 +15,11 @@ def _extend_if_exists(current, target):
 
 
 async def _get_assignee_ids(webhook: Webhook):
-    ids = []
     object_kind = webhook.object_kind
     if object_kind == OBJECT_INFOS.NOTE.value:
         note_type = webhook.object_attributes.noteable_type
         if note_type == OBJECT_INFOS.ISSUE_NOTEABLE_TYPE.value:
-            return _extend_if_exists([webhook.object_attributes.author_id, webhook.issue.assignee_ids])
+            return _extend_if_exists(webhook.object_attributes.author_id, webhook.issue.assignee_ids)
         elif note_type == OBJECT_INFOS.MERGE_REQUEST_NOTEABLE_TYPE.value:
             return _extend_if_exists([webhook.user.author_id], _extend_if_exists(
                 webhook.merge_request.assignee_ids, webhook.merge_request.reviewer_ids))
