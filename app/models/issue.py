@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List
 
 
 class Issue(BaseModel):
@@ -8,4 +7,4 @@ class Issue(BaseModel):
     iid: int | None = None
     title: str | None = None
     url: str | None = None
-    assignee_ids: List[int] = []
+    assignee_ids: list[int] = []

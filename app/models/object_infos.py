@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class ObjectInfos(Enum):
+class ObjectType(Enum):
     NOTE = "note"
     ISSUE_NOTEABLE_TYPE = "Issue"
     MERGE_REQUEST_NOTEABLE_TYPE = "MergeRequest"
