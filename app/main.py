@@ -52,4 +52,4 @@ async def new_comment_webhook(webhook: Webhook) -> Webhook:
 async def echo_request(request: Request):
     body = await request.body()
     print(body)
-    return await body
+    return body
