@@ -11,7 +11,7 @@ async def _get_assignee_ids(webhook: Webhook):
     if object_kind == OBJECT_INFOS.NOTE.value:
         note_type = webhook.object_attributes.noteable_type
         if note_type == OBJECT_INFOS.ISSUE_NOTEABLE_TYPE.value:
-            return webhook.issue.assignee_ids
+            return webhook.object_attributes.author_id
         elif note_type == OBJECT_INFOS.MERGE_REQUEST_NOTEABLE_TYPE.value:
             return webhook.merge_request.assignee_ids.extend(webhook.merge_request.reviewer_ids)
     elif object_kind == OBJECT_INFOS.ISSUE.value:
