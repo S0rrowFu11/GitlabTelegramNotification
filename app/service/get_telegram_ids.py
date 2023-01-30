@@ -8,7 +8,7 @@ import collections
 OBJECT_INFOS = ObjectType
 
 def _extend_if_exists(current, target):
-    if isinstance(current, collections.Iterable) and isinstance(target, collections.Iterable):
+    if isinstance(current, collections.abc.Iterable) and isinstance(target, collections.abc.Iterable):
         return current.extend(target)
     
     return []
