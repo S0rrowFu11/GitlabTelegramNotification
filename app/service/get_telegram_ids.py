@@ -15,11 +15,11 @@ async def _get_assignee_ids(webhook: Webhook):
         elif note_type == OBJECT_INFOS.MERGE_REQUEST_NOTEABLE_TYPE.value:
             return webhook.merge_request.assignee_ids.extend(webhook.merge_request.reviewer_ids)
     elif object_kind == OBJECT_INFOS.ISSUE.value:
-        return webhook_info.assignee_ids
+        return webhook.assignee_ids
     elif object_kind == OBJECT_INFOS.MERGE_REQUEST.value:
-        return webhook_info.assignee_ids.extend(webhook_info.reviewer_ids)
+        return webhook.assignee_ids.extend(webhook.reviewer_ids)
     elif object_kind == OBJECT_INFOS.PIPELINE.value:
-        return webhook_info.user.id
+        return webhook.user.id
 
 
 async def get_telegram_ids(webhook: Webhook):
