@@ -18,7 +18,6 @@ OBJECT_INFOS = ObjectType
 
 @app.post("/Webhook/")
 async def new_comment_webhook(webhook: Webhook) -> Webhook:
-    print(webhook)
     object_kind = webhook.object_kind
     ids = await get_telegram_ids(webhook)
 
@@ -51,4 +50,6 @@ async def new_comment_webhook(webhook: Webhook) -> Webhook:
 
 @app.post("/echo")
 async def echo_request(request: Request):
-    return await request.body()
+    body = await request.body()
+    print(body)
+    return await body
