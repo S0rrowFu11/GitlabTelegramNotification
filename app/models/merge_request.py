@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import List
 
 
 class MergeRequest(BaseModel):
@@ -10,5 +9,5 @@ class MergeRequest(BaseModel):
     source_branch: str
     iid: int | None = None
     id: int | None = None
-    assignee_ids: List[int] = []
-    reviewer_ids: List[int] = []
+    assignee_ids: list[int] = []
+    reviewer_ids: list[int] = []
