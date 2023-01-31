@@ -3,15 +3,20 @@ import os
 from dotenv import load_dotenv
 from psycopg2 import OperationalError, connect
 from app.models.object_infos import ObjectType
-import collections
+from typing import TypeVar, Iterable
 
 OBJECT_INFOS = ObjectType
 
-def _extend_if_exists(current, target):
-    if isinstance(current, collections.abc.Iterable) and isinstance(target, collections.abc.Iterable):
-        return current.extend(target)
-    
-    return []
+T = TypeVar("T")
+
+
+def _extend_if_exists(*args: list[T]):
+    target = []
+    for arg in args:
+        if isinstance(arg, Iterable):
+            target.extend(arg)
+
+    return target
 
 
 async def _get_assignee_ids(webhook: Webhook):
@@ -19,10 +24,9 @@ async def _get_assignee_ids(webhook: Webhook):
     if object_kind == OBJECT_INFOS.NOTE.value:
         note_type = webhook.object_attributes.noteable_type
         if note_type == OBJECT_INFOS.ISSUE_NOTEABLE_TYPE.value:
-            return _extend_if_exists(webhook.object_attributes.author_id, webhook.issue.assignee_ids)
+            return set(_extend_if_exists(webhook.object_attributes.author_id, webhook.issue.assignee_ids))
         elif note_type == OBJECT_INFOS.MERGE_REQUEST_NOTEABLE_TYPE.value:
-            return _extend_if_exists([webhook.user.author_id], _extend_if_exists(
-                webhook.merge_request.assignee_ids, webhook.merge_request.reviewer_ids))
+            return set(_extend_if_exists([webhook.user.id], webhook.merge_request.assignee_ids, webhook.merge_request.reviewer_ids))
     elif object_kind == OBJECT_INFOS.ISSUE.value:
         return webhook.assignee_ids
     elif object_kind == OBJECT_INFOS.MERGE_REQUEST.value:
