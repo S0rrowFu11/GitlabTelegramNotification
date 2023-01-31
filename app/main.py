@@ -1,6 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, HTTPException
+from app.service.is_access import is_access
 from app.service.send_message import send_message
-import json
 from app.service.generate_new_pipe_line_message import generate_new_pipe_line_message
 from app.service.generate_new_comment_merge_message import generate_new_comment_merge_message
 from app.service.generate_new_comment_message import generate_new_comment_issue_message
@@ -9,7 +9,6 @@ from app.service.generate_new_merge_request_message import generate_new_merge_re
 from app.models.webhook import Webhook
 from app.models.object_infos import ObjectType
 from app.service.get_telegram_ids import get_telegram_ids
-from fastapi import Request
 
 
 app = FastAPI()
@@ -17,7 +16,10 @@ OBJECT_INFOS = ObjectType
 
 
 @app.post("/Webhook/")
-async def new_comment_webhook(webhook: Webhook) -> Webhook:
+async def new_comment_webhook(webhook: Webhook, request: Request) -> Webhook:
+    if not is_access(request):
+        raise HTTPException(status_code=403, detail="Access denied")
+
     object_kind = webhook.object_kind
     ids = await get_telegram_ids(webhook)
 
@@ -47,6 +49,7 @@ async def new_comment_webhook(webhook: Webhook) -> Webhook:
         return webhook
 
     return webhook
+
 
 @app.post("/echo")
 async def echo_request(request: Request):
