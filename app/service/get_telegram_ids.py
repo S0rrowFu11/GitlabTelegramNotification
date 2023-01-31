@@ -28,7 +28,7 @@ async def _get_assignee_ids(webhook: Webhook):
         elif note_type == OBJECT_INFOS.MERGE_REQUEST_NOTEABLE_TYPE.value:
             return set(_extend_if_exists([webhook.user.id], webhook.merge_request.assignee_ids, webhook.merge_request.reviewer_ids))
     elif object_kind == OBJECT_INFOS.ISSUE.value:
-        return webhook.assignee_ids
+        return set(_extend_if_exists(webhook.object_attributes.assignee_ids, [webhook.object_attributes.author_id]))
     elif object_kind == OBJECT_INFOS.MERGE_REQUEST.value:
         return webhook.assignee_ids.extend(webhook.reviewer_ids)
     elif object_kind == OBJECT_INFOS.PIPELINE.value:
