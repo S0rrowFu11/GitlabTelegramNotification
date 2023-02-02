@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, HTTPException
 from app.service.is_access import is_access
 from app.service.send_message import send_message
-from app.service.generate_newpipe_line_message import generate_new_pipe_line_message
+from app.service.generate_pipeline_failed_message import generate_new_pipe_line_message
 from app.service.generate_new_comment_merge_message import generate_new_comment_merge_message
 from app.service.generate_new_comment_message import generate_new_comment_issue_message
 from app.service.generate_new_issue_message import generate_new_issue_message

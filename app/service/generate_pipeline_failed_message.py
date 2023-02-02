@@ -4,9 +4,9 @@ OBJECT_INFOS = ObjectType
 
 
 async def generate_new_pipe_line_message(webhook: Webhook):
-    message_text = f"[{webhook.project.name} notification.]({webhook.project.web_url})\n" \
-                   f"Failed Pipeline №{webhook.object_attributes.iid}:"
+    message_text = f"🛠 [{webhook.project.name}]({webhook.project.web_url})\n\n" \
+                   f"Failed Pipeline #{webhook.object_attributes.id}:"
     for build in webhook.builds:
         if build.status == OBJECT_INFOS.FAILED_STATUS.value:
-            message_text += f"\n{build.name} status: {build.status}"
+            message_text += f"\n\t - ***{build.name}***: {build.status}"
     return message_text
