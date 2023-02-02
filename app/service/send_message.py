@@ -11,7 +11,8 @@ async def send_message(message_text: str, ids: list[int]):
         load_dotenv(env_path())
         token = os.environ.get(bot_secret())
         for id in ids:
-            requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={
+            response = requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={
                 "chat_id": id, "text": message_text, "parse_mode": "Markdown", "disable_web_page_preview": "true"})
+            response.raise_for_status()
     except requests.exceptions.HTTPError as err:
         logger.error(err)
