@@ -45,8 +45,7 @@ async def get_telegram_ids(webhook: Webhook):
     result = cursor.fetchall()
     for assingee_id in await _get_assignee_ids(webhook):
         for row in result:
-            telegram_id = row[0]
-            gitlab_id = row[1]
+            telegram_id, gitlab_id = row
             if assingee_id == gitlab_id:
                 target_telegram_ids.append(telegram_id)
 
