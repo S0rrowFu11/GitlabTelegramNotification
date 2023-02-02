@@ -1,9 +1,9 @@
 from app.models.webhook import Webhook
-import os
 from dotenv import load_dotenv
-from psycopg2 import OperationalError, connect
+from psycopg2 import connect
 from app.models.object_infos import ObjectType
 from typing import TypeVar, Iterable
+from app.utils.config import dsn, env_path
 
 OBJECT_INFOS = ObjectType
 
@@ -37,8 +37,8 @@ async def _get_assignee_ids(webhook: Webhook):
 
 async def get_telegram_ids(webhook: Webhook):
     target_telegram_ids = []
-    load_dotenv(".env")
-    connection = connect(os.environ.get("DSN"))
+    load_dotenv(env_path())
+    connection = connect(dsn=dsn())
     cursor = connection.cursor()
     cursor.execute("""
     select telegram_id, gitlab_id from tg_gitlab.telegram_gitlab order by gitlab_id""")
