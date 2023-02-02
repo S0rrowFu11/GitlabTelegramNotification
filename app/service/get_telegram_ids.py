@@ -32,7 +32,7 @@ async def _get_assignee_ids(webhook: Webhook):
     elif object_kind == OBJECT_INFOS.MERGE_REQUEST.value:
         return set(_extend_if_exists([webhook.user.id], webhook.object_attributes.assignee_ids, webhook.object_attributes.reviewer_ids))
     elif object_kind == OBJECT_INFOS.PIPELINE.value:
-        return set(webhook.user.id)
+        return [webhook.user.id]
 
 
 async def get_telegram_ids(webhook: Webhook):
