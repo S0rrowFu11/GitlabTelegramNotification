@@ -7,6 +7,7 @@ from app.models.issue import Issue
 from app.models.assignee import Assignee
 from app.models.merge_request import MergeRequest
 from pydantic import BaseModel
+from changes import Changes
 
 
 class Webhook(BaseModel):
@@ -18,3 +19,4 @@ class Webhook(BaseModel):
     issue: Issue | None = None
     builds: list[Build] = []
     merge_request: MergeRequest | None = None
+    changes: Changes | None = None

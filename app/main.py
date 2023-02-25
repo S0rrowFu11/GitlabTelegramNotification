@@ -21,6 +21,7 @@ async def new_comment_webhook(webhook: Webhook, request: Request) -> Webhook:
         raise HTTPException(status_code=403, detail="Access denied")
 
     object_kind = webhook.object_kind
+    changes = webhook.changes
     ids = await get_telegram_ids(webhook)
 
     if object_kind == OBJECT_INFOS.NOTE.value:
@@ -30,12 +31,12 @@ async def new_comment_webhook(webhook: Webhook, request: Request) -> Webhook:
             message_text = await generate_new_comment_issue_message(webhook)
             await send_message(message_text, ids)
             return webhook
-        elif note_type == OBJECT_INFOS.MERGE_REQUEST_NOTEABLE_TYPE.value:
+        elif note_type == OBJECT_INFOS.MERGE_REQUEST_NOTEABLE_TYPE.value and changes.created_at.previous is None and changes.created_at.current is not None:
             message_text = await generate_new_comment_merge_message(webhook)
             await send_message(message_text, ids)
             return webhook
 
-    elif object_kind == OBJECT_INFOS.ISSUE.value:
+    elif object_kind == OBJECT_INFOS.ISSUE.value and changes.created_at.previous is None and changes.created_at.current is not None:
         message_text = await generate_new_issue_message(webhook)
         await send_message(message_text, ids)
         return webhook
