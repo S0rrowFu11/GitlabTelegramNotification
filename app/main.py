@@ -17,10 +17,11 @@ OBJECT_INFOS = ObjectType
 
 @app.post("/Webhook/")
 async def new_comment_webhook(webhook: Webhook, request: Request) -> Webhook:
-    if not is_access(request):
-        raise HTTPException(status_code=403, detail="Access denied")
+    #if not is_access(request):
+    #    raise HTTPException(status_code=403, detail="Access denied")
 
     object_kind = webhook.object_kind
+    changes = webhook.changes
     ids = await get_telegram_ids(webhook)
 
     if object_kind == OBJECT_INFOS.NOTE.value:
@@ -35,7 +36,7 @@ async def new_comment_webhook(webhook: Webhook, request: Request) -> Webhook:
             await send_message(message_text, ids)
             return webhook
 
-    elif object_kind == OBJECT_INFOS.ISSUE.value:
+    elif object_kind == OBJECT_INFOS.ISSUE.value and changes.created_at.previous is None and changes.created_at.current is not None:
         message_text = await generate_new_issue_message(webhook)
         await send_message(message_text, ids)
         return webhook
